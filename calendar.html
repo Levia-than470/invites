@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f9;
+            margin: 0;
+        }
+        header nav {
+            background: #333;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+        }
+        .day {
+            text-align: center;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .day.highlight {
+            background: #5cb85c;
+            color: white;
+        }
+    </style>
+    <script>
+        // Redirect to login page if the user is not logged in
+        if (localStorage.getItem("isLoggedIn") !== "true") {
+            window.location.href = "login.html";
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html">Tasks</a>
+            <a href="calendar.html">Calendar</a>
+            <a href="statistics.html">Statistics</a>
+            <a href="notes.html">Notes</a>
+            <a href="settings.html">Settings</a>
+        </nav>
+    </header>
+    <div class="container">
+        <h1>Calendar</h1>
+        <div class="calendar" id="calendar"></div>
+    </div>
+    <script>
+        function createCalendar() {
+            const calendar = document.getElementById('calendar');
+            const daysInMonth = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate();
+
+            for (let i = 1; i <= daysInMonth; i++) {
+                const day = document.createElement('div');
+                day.className = 'day';
+                day.textContent = i;
+                calendar.appendChild(day);
+            }
+        }
+
+        function highlightDays() {
+            // Example logic for highlighting dates (replace with real data)
+            const days = document.querySelectorAll('.day');
+            days[0].classList.add('highlight'); // Highlight the first day
+        }
+
+        createCalendar();
+        highlightDays();
+    </script>
+</body>
+</html>
+

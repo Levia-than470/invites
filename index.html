@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f9;
+            margin: 0;
+        }
+        header {
+            background: #333;
+            padding: 10px;
+        }
+        nav {
+            text-align: center;
+        }
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .task-input {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .task-input input {
+            flex: 1;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .task-input button {
+            margin-left: 10px;
+            padding: 10px;
+            font-size: 16px;
+            background: #5cb85c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 10px;
+            background: #f9f9f9;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        li.completed span {
+            text-decoration: line-through;
+            color: #888;
+        }
+        li button {
+            background: #d9534f;
+            border: none;
+            padding: 5px 10px;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        // Redirect to login page if the user is not logged in
+        if (localStorage.getItem("isLoggedIn") !== "true") {
+            window.location.href = "login.html";
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html">Tasks</a>
+            <a href="calendar.html">Calendar</a>
+            <a href="statistics.html">Statistics</a>
+            <a href="notes.html">Notes</a>
+            <a href="settings.html">Settings</a>
+        </nav>
+    </header>
+    <div class="container">
+        <h1>Task Manager</h1>
+        <div class="task-input">
+            <input type="text" id="taskInput" placeholder="Enter a new task">
+            <button onclick="addTask()">Add</button>
+        </div>
+        <ul id="taskList"></ul>
+    </div>
+    <script>
+        function addTask() {
+            const taskInput = document.getElementById('taskInput');
+            const taskList = document.getElementById('taskList');
+
+            if (taskInput.value.trim() === "") {
+                alert("Please enter a task.");
+                return;
+            }
+
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <span>${taskInput.value}</span>
+                <button onclick="deleteTask(this)">Delete</button>
+            `;
+            li.onclick = () => li.classList.toggle('completed');
+            taskList.appendChild(li);
+            taskInput.value = "";
+        }
+
+        function deleteTask(button) {
+            const li = button.parentElement;
+            li.remove();
+        }
+    </script>
+</body>
+</html>
+
